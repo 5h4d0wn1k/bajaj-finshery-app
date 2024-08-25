@@ -11,7 +11,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import Select from "react-select"; // Assuming you're using react-select
+import Select from "react-select";
 
 export default function Component() {
   const [jsonInput, setJsonInput] = useState("");
@@ -30,12 +30,14 @@ export default function Component() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: jsonInput,
+        body: JSON.stringify({ data: JSON.parse(jsonInput) }), // Convert JSON input to object
       });
+      if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
       const data = await res.json();
       setResponse(data);
     } catch (err) {
-      console.error(err);
+      console.error("Error submitting data:", err);
+      setResponse({ is_success: false, error: err.message });
     }
   };
 
