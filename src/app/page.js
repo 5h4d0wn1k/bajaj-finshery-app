@@ -9,7 +9,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Select } from "@/components/ui/select";
+import Select from "react-select"; // Assuming you're using react-select
 
 export default function Component() {
   const [jsonInput, setJsonInput] = useState("");
@@ -37,8 +37,8 @@ export default function Component() {
     }
   };
 
-  const handleFieldSelect = (value) => {
-    setSelectedFields(value);
+  const handleFieldSelect = (selectedOptions) => {
+    setSelectedFields(selectedOptions.map((option) => option.value));
   };
 
   return (
@@ -66,16 +66,17 @@ export default function Component() {
           <CardContent>
             <div className="space-y-4">
               <div>
-                <Label htmlFor="fields">Selected Fields</Label>
+                <Label htmlFor="fields">Select Fields</Label>
                 <Select
                   id="fields"
-                  value={selectedFields}
                   isMulti
                   options={Object.keys(response).map((key) => ({
                     value: key,
                     label: key,
                   }))}
-                  onValueChange={handleFieldSelect}
+                  onChange={handleFieldSelect}
+                  className="basic-multi-select"
+                  classNamePrefix="select"
                 />
               </div>
               <div>
