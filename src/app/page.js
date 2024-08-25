@@ -25,7 +25,7 @@ export default function Component() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("YOUR_API_URL", {
+      const res = await fetch("https://backend-vav4-git-main-5h4d0wn1ks-projects.vercel.app/bfhl", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
