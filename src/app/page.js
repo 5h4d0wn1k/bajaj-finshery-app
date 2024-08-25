@@ -25,14 +25,24 @@ export default function Component() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      // Parse and validate JSON input
+      let parsedInput;
+      try {
+        parsedInput = JSON.parse(jsonInput);
+      } catch (err) {
+        throw new Error("Invalid JSON format");
+      }
+      
       const res = await fetch("https://backend-vav4-git-main-5h4d0wn1ks-projects.vercel.app/bfhl", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ data: JSON.parse(jsonInput) }), // Convert JSON input to object
+        body: JSON.stringify({ data: parsedInput }), // Properly stringify the JSON object
       });
+      
       if (!res.ok) throw new Error(`HTTP error! Status: ${res.status}`);
+      
       const data = await res.json();
       setResponse(data);
     } catch (err) {
@@ -40,6 +50,7 @@ export default function Component() {
       setResponse({ is_success: false, error: err.message });
     }
   };
+  
 
   const handleFieldSelect = (selectedOptions) => {
     setSelectedFields(selectedOptions.map((option) => option.value));
