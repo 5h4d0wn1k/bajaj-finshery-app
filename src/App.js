@@ -7,9 +7,10 @@ function App() {
   const [response, setResponse] = useState(null);
   const [error, setError] = useState('');
   const [selectedOptions, setSelectedOptions] = useState([]);
+  const apiEndpoint = '/api/bfhl';
 
   useEffect(() => {
-    document.title = "21BCY10249"; // Replace with your actual roll number
+    document.title = '21BCY10249';
   }, []);
 
   const options = [
@@ -22,13 +23,23 @@ function App() {
     e.preventDefault();
     setError('');
     setResponse(null);
+    setSelectedOptions([]);
 
     try {
+      if (!input.trim()) {
+        throw new Error('Input cannot be empty.');
+      }
+
       const parsedInput = JSON.parse(input);
-      const res = await axios.post('/api/bfhl', parsedInput);
+      if (!parsedInput.data || !Array.isArray(parsedInput.data)) {
+        throw new Error('JSON should have a "data" array.');
+      }
+
+      const res = await axios.post(apiEndpoint, parsedInput);
       setResponse(res.data);
     } catch (err) {
-      setError(err.message);
+      console.error(err);
+      setError(`Error: ${err.message}`);
     }
   };
 
@@ -37,13 +48,29 @@ function App() {
 
     return (
       <div>
-        <p>User ID: {response.user_id}</p>
-        <p>Email: {response.email}</p>
-        <p>Roll Number: {response.roll_number}</p>
+        {response.user_id && (
+          <p>
+            <strong>User ID:</strong> {response.user_id}
+          </p>
+        )}
+        {response.email && (
+          <p>
+            <strong>Email:</strong> {response.email}
+          </p>
+        )}
+        {response.roll_number && (
+          <p>
+            <strong>Roll Number:</strong> {response.roll_number}
+          </p>
+        )}
         {selectedOptions.map((option) => (
           <div key={option.value}>
             <h3>{option.label}</h3>
-            <p>{JSON.stringify(response[option.value])}</p>
+            {response[option.value] && (
+              <p>
+                <code>{JSON.stringify(response[option.value], null, 2)}</code>
+              </p>
+            )}
           </div>
         ))}
       </div>
@@ -54,17 +81,22 @@ function App() {
     <div className="App">
       <h1>BFHL Operation</h1>
       <form onSubmit={handleSubmit}>
-        <textarea
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder='Enter JSON here (e.g., {"data": ["M","1","334","4","B","Z","a"]})'
-          rows={5}
-          cols={50}
-        />
+      <textarea
+      value={input}
+      onChange={(e) => setInput(e.target.value)}
+      placeholder='Enter JSON here (e.g., {\"data\": [\"M\",\"1\",\"334\",\"4\",\"B\",\"Z\",\"a\"]})'
+      rows={5}
+      cols={50}
+      />
+
         <br />
         <button type="submit">Submit</button>
       </form>
-      {error && <p style={{ color: 'red' }}>{error}</p>}
+      {error && (
+        <p style={{ color: 'red' }}>
+          <strong>Error:</strong> {error}
+        </p>
+      )}
       {response && (
         <div>
           <h2>Response:</h2>

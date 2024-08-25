@@ -1,0 +1,22 @@
+{
+    "builds": [
+      {
+        "src": "mybackendapi/index.js",
+        "use": "@vercel/node"
+      },
+      {
+        "src": "src/**/*",
+        "use": "@vercel/static-build",
+        "config": {
+          "distDir": "build"
+        }
+      }
+    ],
+    "routes": [
+      {
+        "src": "/bfhl",
+        "dest": "/mybackendapi/index.js"
+      }
+    ]
+  }
+  
