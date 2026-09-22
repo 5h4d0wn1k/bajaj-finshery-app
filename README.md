@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Bajaj Finserv App
 
-## Getting Started
+A Next.js 14 JSON data processor frontend for the Bajaj Finserv API — paste
+JSON data, POST it to the `/bfhl` backend, and filter which fields appear in the
+response.
 
-First, run the development server:
+[![GitHub stars](https://img.shields.io/github/stars/5h4d0wn1k/bajaj-finshery-app)](#)
+[![Last commit](https://img.shields.io/github/last-commit/5h4d0wn1k/bajaj-finshery-app)](#)
+
+Deployment: [bajaj-finshery-app.vercel.app](https://bajaj-finshery-app.vercel.app)
+
+## Why this project
+
+API integration demos need to make request/response flows tangible. This app is
+a focused, client-side tool for working with the Bajaj Finserv `/bfhl`
+endpoint: it validates that you pasted valid JSON, submits it to the backend,
+and then lets you inspect the response field-by-field with a multi-select. It
+keeps the frontend minimal and dependency-light — Next.js 14 with the App
+Router, Tailwind CSS, Radix UI primitives, and `react-select` — so it doubles
+as a clean starting point for JSON-driven API frontends.
+
+## Features
+
+- **Next.js 14 App Router** with React 18 (JavaScript)
+- **JSON validation** — invalid input is caught and surfaced before submit
+- **Backend POST** — submits the parsed JSON to the `/bfhl` endpoint and
+  renders the response
+- **Field filtering** — multi-select (`react-select`) to show only the response
+  keys you care about
+- **Response inspector** — read-only, pretty-printed JSON output
+- **Tailwind CSS + Radix UI** — `button`, `card`, `label`, `select`, `textarea`,
+  `checkbox` primitives
+- **Custom typography** — Bricolage Grotesque + Space Mono via `next/font`
+
+## Quickstart
+
+Prerequisites: Node 18+, npm.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev       # http://localhost:3000
+npm run build     # production build
+npm run start     # serve the production build
+npm run lint      # eslint
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Project structure
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+- `src/app/` — App Router `layout.js` and `page.js`
+- `src/components/ui/` — Radix/Tailwind UI primitives
+- `src/components/component/` — the main JSON processor component
+- `src/lib/utils.js` — `cn()` classname helper
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## Contributing
 
-## Learn More
+Contributions are welcome via issues and pull requests.
 
-To learn more about Next.js, take a look at the following resources:
+## License
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+No LICENSE file is currently published in this repository. Contact the
+maintainer about usage terms.
