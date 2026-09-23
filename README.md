@@ -57,5 +57,5 @@ Contributions are welcome via issues and pull requests.
 
 ## License
 
-No LICENSE file is currently published in this repository. Contact the
-maintainer about usage terms.
+Proprietary - see LICENSE
+
